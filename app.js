@@ -1,16 +1,19 @@
+// Importar a biblioteca Supabase
+import { createClient } from "@supabase/supabase-js"
+
 // Inicializar o cliente Supabase
 // Substitua estas variáveis com suas credenciais do Supabase
 const SUPABASE_URL = "https://zqnwarooewrabsxkemtt.supabase.co"
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpxbndhcm9vZXdyYWJzeGtlbXR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMjkxNDcsImV4cCI6MjA2MTYwNTE0N30.62dffZaQtdL0ssJFnOMo1WXQLgtdETwiDeaePcQW1bY"
 
-// Criar o cliente Supabase
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+// Criar o cliente Supabase corretamente
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 // Função para buscar dados do Supabase
 async function fetchInstruments() {
   try {
     // Buscar todos os registros da tabela 'instruments'
-    const { data, error } = await supabase.from("instruments").select("*")
+    const { data, error } = await supabaseClient.from("instruments").select("*")
 
     if (error) {
       throw error
@@ -60,10 +63,10 @@ function displayInstruments(instruments) {
 function displayError(message) {
   const tableBody = document.getElementById("table-body")
   tableBody.innerHTML = `
-        <tr class="error-message">
-            <td colspan="2">${message}</td>
-        </tr>
-    `
+    <tr class="error-message">
+      <td colspan="2">${message}</td>
+    </tr>
+  `
 }
 
 // Carregar os dados quando a página for carregada
